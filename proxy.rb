@@ -1,9 +1,15 @@
 require 'webrick'
 require 'webrick/httpproxy'
 
-# ARGUMENTS: local_port proxy_host proxy_port proxy_user proxy_pass
+local_port, proxy_host, proxy_port, proxy_user, proxy_pass = ARGV
 
-proxy = WEBrick::HTTPProxyServer.new Port: ARGV[0], ProxyURI: URI("http://#{ARGV[3]}:#{ARGV[4]}@#{ARGV[1]}:#{ARGV[2]}")
+if ARGV[3]
+  proxy = WEBrick::HTTPProxyServer.new Port: local_port, ProxyURI: URI("http://#{proxy_user}:#{proxy_pass}@#{proxy_host}:#{proxy_port}")
+elsif ARGV[1]
+  proxy = WEBrick::HTTPProxyServer.new Port: local_port, ProxyURI: URI("http://#{proxy_host}:#{proxy_port}")
+else
+  proxy = WEBrick::HTTPProxyServer.new Port: local_port || 8000
+end
 
 trap 'INT'  do proxy.shutdown end
 trap 'TERM' do proxy.shutdown end

@@ -19,4 +19,19 @@ Then start your proxy on the command line with the following arguments:
 ruby proxy.rb <local port> <upstream proxy host> <upstream proxy port> <upstream proxy username> <upstream proxy password>
 ```
 
+If your proxy does not require authentication:
+```
+ruby proxy.rb <local port> <upstream proxy host> <upstream proxy port>
+```
+
+Or if you just wanna run a local proxy for funzies and don't have an upstream proxy:
+```
+ruby proxy.rb <local port>
+```
+
+Or you are not imaginative enough to choose a local port, you can have it run on 8000:
+```
+ruby proxy.rb
+```
+
 This will of course make the username and password for the upstream proxy completely visible to those who can view the processes, but I am indifferent for my use case. :)
